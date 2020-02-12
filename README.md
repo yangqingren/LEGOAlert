@@ -72,7 +72,8 @@ If you prefer not to use any of the dependency mentioned above, you can integrat
 - (instancetype)addCloseButton;
 - (instancetype)addButtons:(NSArray<NSString *> *)buttons;
 - (instancetype)addCompletedHander:(void(^)(NSInteger))completedHander;
-
+ ```
+ ```
 [[[[[[LEGOAlertView new] addMessage:msg] addTitle:@"title"] addButtons:@[@"1",@"2",@"3",@"4"]] addCompletedHander:^(NSInteger index) {
                     
  }] show];
@@ -83,7 +84,8 @@ If you prefer not to use any of the dependency mentioned above, you can integrat
 ### Prompt box.Inquiry box.  提示框 询问框
 ```
   [LEGOAlert say:@"I want to say something"];
-  
+```
+```
   [LEGOAlert ask:^(NSInteger answer) {
             
    } message:@"Do u love me do u love me?" buttons:@[@"取消",@"确定"]];
