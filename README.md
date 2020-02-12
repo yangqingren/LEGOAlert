@@ -32,6 +32,7 @@ pod 'LEGOAlert'
 - [x] Attributed string.  富文本
 - [x] TextField box.  输入框
 - [x] TextView box.  文本框
+- [x] image-text box.  图文框
 - [x] Custom box.  自定义视图
 - [x] Content scrolling.  滚动显示
 - [x] Horizontal and Vertical screen.  横竖屏适配
@@ -57,70 +58,54 @@ pod 'LEGOAlert'
 
 If you prefer not to use any of the dependency mentioned above, you can integrate LEGOPhotosManager into your project manually. Just drag & drop the `Sources` folder to your project.
 
+## ⚠️⚠️⚠️ WARNING ⚠️⚠️⚠️ New functions!
+### Content scrolling.  滚动显示
+
+![image](https://github.com/legokit/LEGOAlert/blob/master/Resources/scrolling.png)
+
+### Custom box.  自定义添加，随意组合，自由搭配！
+
+```
+// custom add. 自定义添加，互不影响
+- (instancetype)addTitle:(NSString *)title;
+- (instancetype)addMessage:(LEGOAlertMessage *)message;
+- (instancetype)addCloseButton;
+- (instancetype)addButtons:(NSArray<NSString *> *)buttons;
+- (instancetype)addCompletedHander:(void(^)(NSInteger))completedHander;
+
+[[[[[[LEGOAlertView new] addMessage:msg] addTitle:@"title"] addButtons:@[@"1",@"2",@"3",@"4"]] addCompletedHander:^(NSInteger index) {
+                    
+ }] show];
+ ```
+ 
 ## Usage
-### Get album list.  获取相册列表
-```
-/** Get all album lists 获取所有相册列表 */
-  NSMutableArray <PHAssetCollection *> *collections = [LEGOPhotosManager systemAssetCollection];
 
-/** Get a list of all photos 获取所有照片列表*/
-  NSMutableArray <PHAsset *> *assets = [LEGOPhotosManager systemAssetsByAssetCollection:collections.firstObject];
-
-/** Get a list of photos exclusive to the current app 获取当前应用专属照片列表*/
-  NSMutableArray <PHAsset *> *assets = [LEGOPhotosManager getCameraAssets];
+### Prompt box.Inquiry box.  提示框 询问框
 ```
-### Save photos.  保存照片  Delete photos.  删除照片
-```
-/** Save imagedata to system album 将 imageData 保存到系统相册*/
-  [LEGOPhotosManager savePhotoToAssetByImage:image date:[NSDate date] location:currLocation completion:^(BOOL success, NSError * _Nonnull error) {
-        
-  }];
-/** Save image to system album 将 image 保存到系统相册*/
-  [LEGOPhotosManager savePhotoToAssetByImageData:imageData date:[NSDate date] location:currLocation completion:^(BOOL success, NSError * _Nonnull error) {
-        
-  }];
-/** Delete from system album by assets 通过 assets 从系统相册删除*/
-  [LEGOPhotosManager delePhotoAssets:@[asset] completion:^(BOOL success) {
-        
-  }];
-/** Delete from system album by assetsID 通过 assetsID 从系统相册删除*/
-  [LEGOPhotosManager delePhotoAssetsIdentitys:@[assetID] completion:^(BOOL success) {
-        
-  }];
-```
-### Get photos by iCloud.  通过 iCloud 获取照片
-```
-/** Get thumbnails image by asset 通过 asset 获取缩略图*/
-   [LEGOPhotosManager getThumbnailImageByAsset:asset targetSize:CGSizeMake(200, 300) completion:^(UIImage * _Nonnull thumbnailImage, PHImageRequestID requestID, BOOL isInCloud) {
-        
-   }];
-/** Get originalImage by asset 通过 asset 获取原图*/
-   [LEGOPhotosManager getOriginalImageByAsset:asset completion:^(UIImage * _Nonnull originalImage, PHImageRequestID requestID) {
-        
-   }];
-/** Get originalImage by asset, param Progress 通过 asset 获取原图，带进度条*/
-  [LEGOPhotosManager getOriginalImageByAsset:asset progressHandler:^(double progress, NSError * _Nullable error, BOOL * _Nonnull stop, NSDictionary * _Nullable info) {
-        
-   } completion:^(UIImage * _Nonnull originalImage, PHImageRequestID requestID) {
-        
-   }];
-/** Get imageData by asset 通过 asset 获取原图 imageData*/
-  [LEGOPhotosManager getOriginalImageByAsset:asset completionData:^(NSData * _Nonnull originalImageData, PHImageRequestID requestID) {
-        
-   }];
-/** Get imageData by asset, param Progress 通过 asset 获取原图 imageData，带进度条*/
-   [LEGOPhotosManager getOriginalImageByAsset:asset progressHandler:^(double progress, NSError * _Nullable error, BOOL * _Nonnull stop, NSDictionary * _Nullable info) {
-        
-        } completionData:^(NSData * _Nonnull originalImageData, PHImageRequestID requestID) {
-        
-   }];
+  [LEGOAlert say:@"I want to say something"];
+  
+  [LEGOAlert ask:^(NSInteger answer) {
+            
+   } message:@"Do u love me do u love me?" buttons:@[@"取消",@"确定"]];
 ```
 
-### Cancel photo request.  取消照片请求
+![image](https://github.com/legokit/LEGOAlert/blob/master/Resources/say.png)
+![image](https://github.com/legokit/LEGOAlert/blob/master/Resources/ask.png)
+
+### TextField box.  输入框
 ```
-/** cancel request by requestID 取消请求*/
-  [LEGOPhotosManager cancelPHImageRequestID:PHImageRequestID];
+  [LEGOAlert showInputTextFieldWithMessage:@"" limit:99 placeholder:@"请输入文字" buttons:@[@"拒绝",@"暂不处理",@"同意"]         block:^(LEGOAlertInputTextField *input, NSInteger answer) {
+            
+   }];
 ```
+![image](https://github.com/legokit/LEGOAlert/blob/master/Resources/textField.png)
+![image](https://github.com/legokit/LEGOAlert/blob/master/Resources/textView.png)
+
+### image-text box.  图文框
+```
+[LEGOAlert showImageWith:[UIImage imageNamed:@"image_xxx_2"] message:@"123"]；
+```
+![image](https://github.com/legokit/LEGOAlert/blob/master/Resources/image-text.png)
 
 
 For details, see example for LEGOAlert.
